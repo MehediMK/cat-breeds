@@ -28,6 +28,7 @@
   - go to project directory
   - Rename `.env sample` to `.env` and enter your api key
   - run `bee run`
+  - `http://localhost:8080` type on your browser
 
 ## Helpful commands
   - `go version` "for check go version"
