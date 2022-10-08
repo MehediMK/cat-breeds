@@ -3,6 +3,30 @@
 
 ## Prerequisites
   - Inatall go version 1.19
+ 
+## First create those directory 
+- [x] `mkdir go` `cd go`
+- [x] `mkdir bin src pkg`
+
+```mermaid
+graph TD;
+    go-->bin;
+    go-->src;
+    go-->pkg;
+```
+  
+## Setup GOPATH, GOBIN and GOENV variables:
+> For linux:
+ - `export GOPATH=/usr/local/go`
+ - `export GOBIN=/usr/local/go/bin`
+ - `export GOENV=/usr/local/go`
+> For Windlow:
+ - `set GOPATH=D:\go`
+ - `set GOBIN=D:\go\bin`
+ - `set GOENV=D:\go`
+ 
+## Create mod file
+  - (Outside GOPATH) run `go mod init go` and then `go mod tidy` on terminal 
   
 ## Install Beego
   - `go get github.com/astaxie/beego`
@@ -12,12 +36,6 @@
   - `go get -u github.com/beego/bee/v2@latest`
   - `go get github.com/beego/beego/v2/server/web@v2.0.4`
   - For env `go get github.com/joho/godotenv`
-
-  
-## Setup GOPATH and GOBIN environment variables:
- - echo 'export GOPATH=/usr/local/go'
- - echo 'export GOBIN=$PATH:/usr/local/go/bin'
-
 
 ## How to Run this Project
 
