@@ -30,6 +30,7 @@ graph TD;
   
 ## Install Beego
   - `go get github.com/astaxie/beego`
+  - for windows `go install github.com/beego/bee/v2@latest;`
   
 # Install dependencies:
   - `go get -u github.com/beego/beego/v2@latest`
