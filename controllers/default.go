@@ -2,12 +2,12 @@ package controllers
 
 import (
 	breed "cat-breeds/models"
+	utils "cat-breeds/utils"
 	"encoding/json"
 	"fmt"
 	"log"
 	"os"
 
-	"github.com/beego/beego/httplib"
 	"github.com/beego/beego/v2/server/web"
 
 	// for env
@@ -37,17 +37,12 @@ func (c *MainController) Get() {
 	api_key := goDotEnvVariable("API_KEY")
 
 	// here get all api breeds
-	breeds_url := "https://api.thecatapi.com/v1/breeds"
-
-	req := httplib.Get(breeds_url)
-	res, err := req.String()
-	if err != nil {
-		fmt.Println(err)
-	}
+	breeds_url := utils.Get_api_request("https://api.thecatapi.com/v1/breeds")
 
 	// here define structure for breeds
 	breeds := breed.Breeds{}
-	err_1 := json.Unmarshal([]byte(res), &breeds)
+	// unmarshall here
+	err_1 := json.Unmarshal([]byte(breeds_url), &breeds)
 	if err_1 != nil {
 		fmt.Println("Here some error get")
 	}
@@ -58,7 +53,7 @@ func (c *MainController) Get() {
 	// get data from cache
 	breeds_data, found := breed.GetCache("breeds_data")
 	if found {
-		fmt.Println("Data get from cache:", breeds_data)
+		fmt.Println("Data get from cache:")
 	} else {
 		fmt.Println("Error! Not found key into cache")
 		return
@@ -74,18 +69,13 @@ func (c *MainController) Get() {
 	}
 	c.Data["reid"] = id
 	fmt.Println("URL: " + id)
-
 	// here api call for images
-	breed_image_url := "https://api.thecatapi.com/v1/images/search?limit=25&breed_ids=" + id + "&api_key=" + api_key
-	req_img := httplib.Get(breed_image_url)
-	res_img, err_img := req_img.String()
-	if err_img != nil {
-		fmt.Println(err_img)
-	}
+	breed_image_url := utils.Get_api_request("https://api.thecatapi.com/v1/images/search?limit=25&breed_ids=" + id + "&api_key=" + api_key)
 
 	// here define structure for breedsimage
 	breeds_image := breed.Breeds_images{}
-	errimg1 := json.Unmarshal([]byte(res_img), &breeds_image)
+	// unmarshall here
+	errimg1 := json.Unmarshal([]byte(breed_image_url), &breeds_image)
 	if errimg1 != nil {
 		fmt.Println("Here some error get")
 	}
