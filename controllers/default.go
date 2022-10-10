@@ -18,6 +18,7 @@ type MainController struct {
 	web.Controller
 }
 
+// for environment setup
 func goDotEnvVariable(key string) string {
 
 	// load .env file
@@ -50,12 +51,24 @@ func (c *MainController) Get() {
 	if err_1 != nil {
 		fmt.Println("Here some error get")
 	}
-	fmt.Println(breeds[0].Id)
+
+	// set data in cache
+	breed.SetCache("breeds_data", breeds)
+
+	// get data from cache
+	breeds_data, found := breed.GetCache("breeds_data")
+	if found {
+		fmt.Println("Data get from cache:", breeds_data)
+	} else {
+		fmt.Println("Error! Not found key into cache")
+		return
+	}
 
 	// get request params
 	var id string
 	c.Ctx.Input.Bind(&id, "breed")
 
+	// check params or not
 	if id == "" {
 		id = breeds[0].Id
 	}
@@ -88,7 +101,7 @@ func (c *MainController) Get() {
 
 	fmt.Println(breeds_image[0].Breeds[0].Name)
 
-	c.Data["breeds"] = breeds
+	c.Data["breeds"] = breeds_data
 	c.Data["breeds_images"] = breeds_image
 	c.TplName = "index.html"
 }

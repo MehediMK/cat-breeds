@@ -26,13 +26,13 @@
       <div class="row py-5">
         <div class="col-xl-6 col-md-6 col-sm-12 col-12 offset-xl-3 offset-md-3 offset-sm-0 offset-0 ">
           <form action="" id="form" method="get">
-            
-          <select class="form-select" name="breed" id="breedid">
-            {{range $index, $breed:=.breeds}}
-              <option value="{{$breed.Id}}">{{$breed.Name}}</option>
-            {{end}}
-          </select>
-        </form>
+              
+            <select class="form-select" name="breed" id="breedid">
+              {{range $breed:=.breeds}}
+                <option value="{{$breed.Id}}">{{$breed.Name}}</option>
+              {{end}}
+            </select>
+          </form>
           <div class="card mt-3" style="width:100%;">
             
             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">

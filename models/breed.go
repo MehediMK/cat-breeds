@@ -1,5 +1,31 @@
 package models
 
+import (
+	"time"
+
+	"github.com/patrickmn/go-cache"
+)
+
+// define cache
+var Cache = cache.New(10*time.Minute, 10*time.Minute)
+
+// for breed setcache
+func SetCache(key string, breed interface{}) bool {
+	Cache.Set(key, breed, cache.NoExpiration)
+	return true
+}
+
+// for breed getcache
+func GetCache(key string) (Breeds, bool) {
+	var breeds Breeds
+	var found bool
+	data, found := Cache.Get(key)
+	if found {
+		breeds = data.(Breeds)
+	}
+	return breeds, found
+}
+
 type Breeds []struct {
 	Id   string `json:"id"`
 	Name string `json:"name"`
