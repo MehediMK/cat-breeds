@@ -1,4 +1,4 @@
-package breed
+package models
 
 type Breeds []struct {
 	Id   string `json:"id"`
