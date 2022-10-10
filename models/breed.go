@@ -5,7 +5,7 @@ type Breeds []struct {
 	Name string `json:"name"`
 }
 
-type Breedsimage []struct {
+type Breeds_images []struct {
 	Breeds []struct {
 		Weight struct {
 			Imperial string `json:"imperial"`

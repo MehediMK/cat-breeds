@@ -33,12 +33,12 @@ func goDotEnvVariable(key string) string {
 func (c *MainController) Get() {
 
 	// load .env file
-	apikey := goDotEnvVariable("API_KEY")
+	api_key := goDotEnvVariable("API_KEY")
 
 	// here get all api breeds
-	breedsurl := "https://api.thecatapi.com/v1/breeds"
+	breeds_url := "https://api.thecatapi.com/v1/breeds"
 
-	req := httplib.Get(breedsurl)
+	req := httplib.Get(breeds_url)
 	res, err := req.String()
 	if err != nil {
 		fmt.Println(err)
@@ -46,8 +46,8 @@ func (c *MainController) Get() {
 
 	// here define structure for breeds
 	breeds := breed.Breeds{}
-	err1 := json.Unmarshal([]byte(res), &breeds)
-	if err1 != nil {
+	err_1 := json.Unmarshal([]byte(res), &breeds)
+	if err_1 != nil {
 		fmt.Println("Here some error get")
 	}
 	fmt.Println(breeds[0].Id)
@@ -63,32 +63,32 @@ func (c *MainController) Get() {
 	fmt.Println("URL: " + id)
 
 	// here api call for images
-	breedimageurl := "https://api.thecatapi.com/v1/images/search?limit=25&breed_ids=" + id + "&api_key=" + apikey
-	reqimg := httplib.Get(breedimageurl)
-	resimg, errimg := reqimg.String()
-	if errimg != nil {
-		fmt.Println(errimg)
+	breed_image_url := "https://api.thecatapi.com/v1/images/search?limit=25&breed_ids=" + id + "&api_key=" + api_key
+	req_img := httplib.Get(breed_image_url)
+	res_img, err_img := req_img.String()
+	if err_img != nil {
+		fmt.Println(err_img)
 	}
 
 	// here define structure for breedsimage
-	breedsimage := breed.Breedsimage{}
-	errimg1 := json.Unmarshal([]byte(resimg), &breedsimage)
+	breeds_image := breed.Breeds_images{}
+	errimg1 := json.Unmarshal([]byte(res_img), &breeds_image)
 	if errimg1 != nil {
 		fmt.Println("Here some error get")
 	}
 
-	c.Data["name"] = breedsimage[0].Breeds[0].Name
-	c.Data["catid"] = breedsimage[0].Breeds[0].ID
-	c.Data["description"] = breedsimage[0].Breeds[0].Description
-	c.Data["temperament"] = breedsimage[0].Breeds[0].Temperament
-	c.Data["origin"] = breedsimage[0].Breeds[0].Origin
-	c.Data["weight"] = breedsimage[0].Breeds[0].Weight.Metric
-	c.Data["life_span"] = breedsimage[0].Breeds[0].LifeSpan
-	c.Data["wikipedia_url"] = breedsimage[0].Breeds[0].WikipediaURL
+	c.Data["name"] = breeds_image[0].Breeds[0].Name
+	c.Data["cat_id"] = breeds_image[0].Breeds[0].ID
+	c.Data["description"] = breeds_image[0].Breeds[0].Description
+	c.Data["temperament"] = breeds_image[0].Breeds[0].Temperament
+	c.Data["origin"] = breeds_image[0].Breeds[0].Origin
+	c.Data["weight"] = breeds_image[0].Breeds[0].Weight.Metric
+	c.Data["life_span"] = breeds_image[0].Breeds[0].LifeSpan
+	c.Data["wikipedia_url"] = breeds_image[0].Breeds[0].WikipediaURL
 
-	fmt.Println(breedsimage[0].Breeds[0].Name)
+	fmt.Println(breeds_image[0].Breeds[0].Name)
 
 	c.Data["breeds"] = breeds
-	c.Data["breedsimages"] = breedsimage
+	c.Data["breeds_images"] = breeds_image
 	c.TplName = "index.html"
 }

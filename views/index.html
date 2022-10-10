@@ -24,7 +24,7 @@
   
     <div class="container">
       <div class="row py-5">
-        <div class="col-xl-8 col-md-8 col-sm-12 col-12 offset-xl-2 offset-md-2 offset-sm-0 offset-0 ">
+        <div class="col-xl-6 col-md-6 col-sm-12 col-12 offset-xl-3 offset-md-3 offset-sm-0 offset-0 ">
           <form action="" id="form" method="get">
             
           <select class="form-select" name="breed" id="breedid">
@@ -39,7 +39,7 @@
             <!-- indicators -->
             <div class="carousel-indicators">
 
-              {{range $index,$breedimage:=.breedsimages}}
+              {{range $index,$breed_image:=.breeds_images}}
                 {{if eq $index 0 }}
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active rounded-circle p-1" aria-current="true" aria-label="Slide 1"></button>
                 {{else}}
@@ -50,14 +50,14 @@
             <!-- indicators -->
               
               <div class="carousel-inner">
-                {{range $index,$breedimage:=.breedsimages}}
+                {{range $index,$breed_image:=.breeds_images}}
                   {{if eq $index 0 }}
                   <div class="carousel-item active">
-                    <img style="height:400px;" src="{{$breedimage.URL}}" class="d-block w-100" alt="...">
+                    <img style="height:400px;" src="{{$breed_image.URL}}" class="d-block w-100" alt="Cat Image">
                   </div>
                   {{else}}
                   <div class="carousel-item">
-                    <img style="height:400px;" src="{{$breedimage.URL}}" class="d-block w-100" alt="">
+                      <img style="height:400px;" src="{{$breed_image.URL}}" class="d-block w-100" alt="Cat Image">
                   </div>
                   {{end}}
                 {{end}}
@@ -74,7 +74,7 @@
 
             <div class="card-body text-center">
               <h5 class="card-title" id="catid">{{.name}}</h5>
-              <p>id: <span>{{.catid}}</span></p>
+              <p>id: <span>{{.cat_id}}</span></p>
               <p class="card-text">{{.description}}</p>
               <p>----</p>
               <p>{{.temperament}}</p>
