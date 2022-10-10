@@ -42,10 +42,13 @@ func (c *MainController) Get() {
 	// here define structure for breeds
 	breeds := breed.Breeds{}
 	// unmarshall here
-	err_1 := json.Unmarshal([]byte(breeds_url), &breeds)
-	if err_1 != nil {
-		fmt.Println("Here some error get")
-	}
+	err_1 = utils.Unmarshaldata(breeds_url, breeds)
+	fmt.Println(err_1)
+	// err_1 := json.Unmarshal([]byte(breeds_url), &breeds)
+	// fmt.Println(reflect.TypeOf(err_1))
+	// if err_1 != nil {
+	// 	fmt.Println("Here some error get")
+	// }
 
 	// set data in cache
 	breed.SetCache("breeds_data", breeds)
