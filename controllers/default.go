@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/beego/beego/httplib"
 	"github.com/beego/beego/v2/server/web"
 
 	// for env
@@ -31,24 +32,35 @@ func goDotEnvVariable(key string) string {
 	return os.Getenv(key)
 }
 
+// for get api request
+func Get_api_request(url string, channel chan string) {
+	req := httplib.Get(url)
+	res, err := req.String()
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		channel <- res
+	}
+}
+
 func (c *MainController) Get() {
+
+	channel := make(chan string)
 
 	// load .env file
 	api_key := goDotEnvVariable("API_KEY")
 
 	// here get all api breeds
-	breeds_url := utils.Get_api_request("https://api.thecatapi.com/v1/breeds")
+	go utils.Get_api_request("https://api.thecatapi.com/v1/breeds", channel)
+	get_breed_data := <-channel
 
 	// here define structure for breeds
 	breeds := breed.Breeds{}
 	// unmarshall here
-	err_1 = utils.Unmarshaldata(breeds_url, breeds)
-	fmt.Println(err_1)
-	// err_1 := json.Unmarshal([]byte(breeds_url), &breeds)
-	// fmt.Println(reflect.TypeOf(err_1))
-	// if err_1 != nil {
-	// 	fmt.Println("Here some error get")
-	// }
+	err_1 := json.Unmarshal([]byte(get_breed_data), &breeds)
+	if err_1 != nil {
+		fmt.Println("Here some error get")
+	}
 
 	// set data in cache
 	breed.SetCache("breeds_data", breeds)
@@ -72,14 +84,16 @@ func (c *MainController) Get() {
 	}
 	c.Data["reid"] = id
 	fmt.Println("URL: " + id)
+
 	// here api call for images
-	breed_image_url := utils.Get_api_request("https://api.thecatapi.com/v1/images/search?limit=25&breed_ids=" + id + "&api_key=" + api_key)
+	go utils.Get_api_request("https://api.thecatapi.com/v1/images/search?limit=25&breed_ids="+id+"&api_key="+api_key, channel)
+	get_breeds_image_data := <-channel
 
 	// here define structure for breedsimage
 	breeds_image := breed.Breeds_images{}
 	// unmarshall here
-	errimg1 := json.Unmarshal([]byte(breed_image_url), &breeds_image)
-	if errimg1 != nil {
+	err_img := json.Unmarshal([]byte(get_breeds_image_data), &breeds_image)
+	if err_img != nil {
 		fmt.Println("Here some error get")
 	}
 
