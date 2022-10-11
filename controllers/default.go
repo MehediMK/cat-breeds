@@ -8,7 +8,6 @@ import (
 	"log"
 	"os"
 
-	"github.com/beego/beego/httplib"
 	"github.com/beego/beego/v2/server/web"
 
 	// for env
@@ -30,17 +29,6 @@ func goDotEnvVariable(key string) string {
 	}
 
 	return os.Getenv(key)
-}
-
-// for get api request
-func Get_api_request(url string, channel chan string) {
-	req := httplib.Get(url)
-	res, err := req.String()
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		channel <- res
-	}
 }
 
 func (c *MainController) Get() {
