@@ -53,7 +53,7 @@ graph TD;
 ## Helpful commands
   - `go version` "for check go version"
   - `bee version` "for check bee version"
-  - `bee new project-name` "for create new bee project"
+  - `bee new project-name` "For create new bee project"
 
 
 
